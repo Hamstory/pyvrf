@@ -19,54 +19,53 @@ $ git clone https://github.com/hamstory/pyvrf
 $ pip install .
 ```
 
-## VRF types
+## VRF constants
 
 ```
-pyvrf.crypto_vrf_secretkeybytes == 64
-pyvrf.crypto_vrf_publickeybytes == 32
-pyvrf.crypto_vrf_seedbytes == 32
-pyvrf.crypto_vrf_proofbytes == 80
-pyvrf.crypto_vrf_outputbytes == 64
+pyvrf.crypto_vrf_secretkeybytes     # 64
+pyvrf.crypto_vrf_publickeybytes     # 32
+pyvrf.crypto_vrf_seedbytes          # 32
+pyvrf.crypto_vrf_proofbytes         # 80
+pyvrf.crypto_vrf_outputbytes        # 64
 ```
 
-secret key가 64 byte인 것에 주의. 여기서 secret key는 seed(32byte) + public key(32byte)를 연결한 값이다.
+Note that secret key is 64 byte. Here, secret key consists of seed(32byte) + public key(32byte).
 
 ## Example
 
-Refer to `tests/test_pyvrf`
+Refer to `tests/test_pyvrf.py`
 
 
 ## VRF functions
 
 ### `crypto_vrf_keypair()`
 
-내부적으로 random seed생성 하고 secret key와 public key를 생성한다.
+Internally generates a random seed and generates a secret key and a public key.
 
 ### `crypto_vrf_keypair_from_seed(seed: bytes)`
 
-주어진 random seed를 가지고 secret key와 public key를 생성한다.
+Creates a secret key and a public key with the given random seed.
 
 ### `crypto_vrf_is_valid_key(pk: bytes)`
 
-해당 public key가 제대로된 key인지 확인한다.
+Ensure that the public key is a valid key.
 
 ### `crypto_vrf_prove(sk: bytes, message: bytes)`
 
-secret key와 message를 가지고 proof를 생성한다.
+Create a proof with a secret key and a message.
 
 ### `crypto_vrf_proof_to_hash(proof: bytes)`
 
-생성된 proof를 이용해서 random hash를 가져온다. 이 함수는 proof를 검증하지 않는다. 검증하고 결과 random hash를 받아오기 위해서는 `crypto_vrf_verify` 함수를 이용해야 한다.
+Use the generated proof to get a random hash. This function does not validate the proof. To verify and get the random hash, you should use the `crypto_vrf_verify` function.
 
 ### `crypto_vrf_verify(pk: bytes, proof: bytes, message: bytes)`
 
-proof를 message, public key를 이용해서 검증하고 해당 proof를 통해 나오는 random hash를 가져온다.
+Verify the proof with the message, public key and get the random hash coming out of the proof.
 
 ### `crypto_vrf_sk_to_pk(sk: bytes)`
 
-secret key에서 public key를 가져온다(secret key의 뒤 32byte가 이미 public key).
+Get the public key from the secret key
 
 ### `crypto_vrf_sk_to_seed(sk: bytes)`
 
-secret key에서 seed를 가져온다(secret key의 앞 32byte가 이미 seed).
-
+Get the seed from the secret key
