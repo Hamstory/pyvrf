@@ -16,6 +16,7 @@ $ sudo make install
 
 ```shell
 $ git clone https://github.com/hamstory/pyvrf
+$ cd pyvrf
 $ pip install .
 ```
 
@@ -33,7 +34,15 @@ Note that secret key is 64 byte. Here, secret key consists of seed(32byte) + pub
 
 ## Example
 
-Refer to `tests/test_pyvrf.py`
+```python
+import pyvrf
+
+pk, sk = pyvrf.crypto_vrf_keypair()
+print(pk.hex())
+print(sk.hex())
+```
+
+More usages are in `tests/test_pyvrf.py`
 
 
 ## VRF functions
