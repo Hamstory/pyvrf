@@ -5,6 +5,9 @@ sodium = ctypes.cdll.LoadLibrary(ctypes.util.find_library('sodium') or ctypes.ut
 if not sodium._name:
     raise ValueError('Unable to find libsodium')
 
+if getattr(sodium, 'crypto_vrf_keypair', None) is None:
+    raise ValueError('This sodium does not contain VRF functions')
+
 
 crypto_vrf_publickeybytes = sodium.crypto_vrf_publickeybytes()
 crypto_vrf_secretkeybytes = sodium.crypto_vrf_secretkeybytes()
